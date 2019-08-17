@@ -63,6 +63,8 @@ const lint = (ruleName: AssertConfig['ruleName'], source: string | SourceFile, r
   if (typeof source === 'string') {
     linter.lint('file.ts', source, configuration);
 
+    console.log('linter', linter);
+    console.log('linter.getResult()', linter.getResult());
     return linter.getResult();
   }
 
