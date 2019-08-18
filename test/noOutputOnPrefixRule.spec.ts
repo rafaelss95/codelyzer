@@ -1,82 +1,106 @@
-import { assertSuccess, assertAnnotated } from './testHelper';
+import { Rule } from '../src/noOutputOnPrefixRule';
+import { assertAnnotated, assertSuccess } from './testHelper';
 
-describe('no-output-on-prefix', () => {
-  describe('invalid directive output property', () => {
-    it('should fail, when a component output property is named with on prefix', () => {
+const {
+  FAILURE_STRING,
+  metadata: { ruleName }
+} = Rule;
+
+describe(ruleName, () => {
+  describe('failure', () => {
+    it('should fail if a component property is prefixed by "on"', () => {
       const source = `
-        @Component()
-        class ButtonComponent {
-          @Output() onChange = new EventEmitter<any>();
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        @Component({
+          selector: 'test'
+        })
+        class TestComponent {
+          @Output() onChange = new EventEmitter<void>();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
       `;
+
       assertAnnotated({
-        ruleName: 'no-output-on-prefix',
-        message: 'In the class "ButtonComponent", the output property "onChange" should not be prefixed with on',
+        message: FAILURE_STRING,
+        ruleName,
         source
       });
     });
 
-    it('should fail, when a directive output property is named with on prefix', () => {
+    it('should fail if a directive property is prefixed by "on"', () => {
       const source = `
-        @Directive()
-        class ButtonDirective {
-          @Output() onChange = new EventEmitter<any>();
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        @Directive({
+          selector: 'test'
+        })
+        class TestDirective {
+          @Output() onChange = new EventEmitter<void>();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
       `;
+
       assertAnnotated({
-        ruleName: 'no-output-on-prefix',
-        message: 'In the class "ButtonDirective", the output property "onChange" should not be prefixed with on',
+        message: FAILURE_STRING,
+        ruleName,
         source
       });
     });
 
-    it('should fail, when a directive output property is named with on prefix', () => {
+    it('should fail if a directive property name is exactly "on"', () => {
       const source = `
-        @Directive()
-        class ButtonDirective {
-          @Output() on = new EventEmitter<any>();
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        @Directive({
+          selector: 'test'
+        })
+        class TestDirective {
+          @Output() on = new EventEmitter<void>();
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         }
       `;
+
       assertAnnotated({
-        ruleName: 'no-output-on-prefix',
-        message: 'In the class "ButtonDirective", the output property "on" should not be prefixed with on',
+        message: FAILURE_STRING,
+        ruleName,
         source
       });
     });
   });
 
-  describe('valid directive output property', () => {
-    it('should succeed, when a directive output property is properly named', () => {
+  describe('success', () => {
+    it('should succeed if a component property is not prefixed by "on"', () => {
       const source = `
-        @Component()
-        class ButtonComponent {
-          @Output() change = new EventEmitter<any>();
+        @Component({
+          selector: 'test'
+        })
+        class TestComponent {
+          @Output() change = new EventEmitter<void>();
         }
       `;
-      assertSuccess('no-output-on-prefix', source);
+
+      assertSuccess(ruleName, source);
     });
 
-    it("should succeed, when a directive output property is properly named, starting with 'on'", () => {
+    it('should succeed if a component property is prefixed by "one"', () => {
       const source = `
-        @Component()
-        class ButtonComponent {
-          @Output() oneProp = new EventEmitter<any>();
+        @Component({
+          selector: 'test'
+        })
+        class TestComponent {
+          @Output() oneProp = new EventEmitter<void>();
         }
       `;
-      assertSuccess('no-output-on-prefix', source);
+
+      assertSuccess(ruleName, source);
     });
 
-    it("should succeed, when an output property containing 'on' suffix", () => {
+    it('should succeed if a component property is prefixed by "selection"', () => {
       const source = `
-        @Component()
-        class SelectComponent {
-          @Output() selectionChanged = new EventEmitter<any>();
+        @Component({
+          selector: 'test'
+        })
+        class TestComponent {
+          @Output() selectionChanged = new EventEmitter<void>();
         }
       `;
-      assertSuccess('no-output-on-prefix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 });

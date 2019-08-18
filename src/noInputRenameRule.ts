@@ -7,10 +7,12 @@ import { DirectiveMetadata } from './angular/metadata';
 import { NgWalker } from './angular/ngWalker';
 import { getClassName, kebabToCamelCase, toTitleCase } from './util/utils';
 
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-05-13';
+
 export class Rule extends AbstractRule {
   static readonly metadata: IRuleMetadata = {
     description: 'Disallows renaming directive inputs by providing a string to the decorator.',
-    descriptionDetails: 'See more at https://angular.io/styleguide#style-05-13.',
+    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}.`,
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Two names for the same property (one private, one public) is inherently confusing.',
@@ -22,7 +24,8 @@ export class Rule extends AbstractRule {
   static readonly FAILURE_STRING = dedent`
     In the class "%s", the directive input property "%s" should not be renamed.
     However, you should use an alias when the directive name is also an input property, and the directive name
-    doesn't describe the property. In this last case, you can disable this rule with \`tslint:disable-next-line:no-input-rename\`.
+    doesn't describe the property. In this last case, you can disable this rule with \`tslint:disable-next-line:no-input-rename\`
+    (${STYLE_GUIDE_LINK})
   `;
 
   apply(sourceFile: SourceFile): RuleFailure[] {

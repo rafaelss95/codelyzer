@@ -3,20 +3,29 @@ import * as Lint from 'tslint';
 import * as ts from 'typescript';
 import { DirectiveMetadata } from './angular/metadata';
 import { NgWalker } from './angular/ngWalker';
+import { getReadableList } from './util/getReadableList';
 import { getDeclaredInterfaceNames } from './util/utils';
 
+interface FailureParameters {
+  readonly suffixes: ReadonlyArray<string>;
+}
+
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-02-03';
 const ValidatorSuffix = 'Validator';
+
+export const getFailureMessage = (failureParameters: FailureParameters = { suffixes: ['Directive'] }): string => {
+  return sprintf(Rule.FAILURE_STRING, getReadableList(failureParameters.suffixes, 'or'));
+};
 
 export class Rule extends Lint.Rules.AbstractRule {
   static readonly metadata: Lint.IRuleMetadata = {
     description: 'Classes decorated with @Directive must have suffix "Directive" (or custom) in their name.',
-    descriptionDetails: 'See more at https://angular.io/styleguide#style-02-03.',
+    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}.`,
     optionExamples: [true, [true, 'Directive', 'MySuffix']],
     options: {
       items: {
         type: 'string'
       },
-      minLength: 0,
       type: 'array'
     },
     optionsDescription: 'Supply a list of allowed component suffixes. Defaults to "Directive".',
@@ -26,7 +35,7 @@ export class Rule extends Lint.Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = 'The name of the class %s should end with the suffix %s (https://angular.io/styleguide#style-02-03)';
+  static readonly FAILURE_STRING = `The name of a directive should be suffixed by %s (${STYLE_GUIDE_LINK})`;
 
   static validate(className: string, suffixes: string[]): boolean {
     return suffixes.some(s => className.endsWith(s));
@@ -54,7 +63,7 @@ class Walker extends NgWalker {
     }
 
     if (!Rule.validate(className, suffixes)) {
-      this.addFailureAtNode(name, sprintf(Rule.FAILURE_STRING, className, suffixes.join(', ')));
+      this.addFailureAtNode(name, getFailureMessage({ suffixes }));
     }
 
     super.visitNgDirective(metadata);

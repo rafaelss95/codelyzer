@@ -8,7 +8,7 @@ import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVis
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
     description:
-      "Checks cyclomatic complexity against a specified limit. It is a quantitative measure of the number of linearly independent paths through a program's source code",
+      "Checks cyclomatic complexity against a specified limit. It is a quantitative measure of the number of linearly independent paths through a program's source code.",
     optionExamples: [true, [true, 6]],
     options: {
       items: {
@@ -25,7 +25,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = "The cyclomatic complexity exceeded the defined limit (cost '%s'). Your template should be refactored.";
+  static readonly FAILURE_STRING = "The cyclomatic complexity exceeded the defined limit (cost '%s'). Your template should be refactored";
   static readonly DEFAULT_MAX_COMPLEXITY = 5;
 
   apply(sourceFile: SourceFile): RuleFailure[] {

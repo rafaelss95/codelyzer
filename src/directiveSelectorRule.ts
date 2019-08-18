@@ -17,7 +17,7 @@ const STYLE_GUIDE_STYLE_TYPE_LINK = 'https://angular.io/guide/styleguide#style-0
 export class Rule extends SelectorPropertyBase {
   static readonly metadata: IRuleMetadata = {
     description: 'Directive selectors should follow given naming rules.',
-    descriptionDetails: `See more at ${STYLE_GUIDE_STYLE_TYPE_LINK} and ${STYLE_GUIDE_PREFIX_LINK}`,
+    descriptionDetails: `See more at ${STYLE_GUIDE_STYLE_TYPE_LINK} and ${STYLE_GUIDE_PREFIX_LINK}.`,
     optionExamples: [
       [true, OPTION_TYPE_ELEMENT, 'my-prefix', OPTION_STYLE_KEBAB_CASE],
       [true, OPTION_TYPE_ELEMENT, ['ng', 'ngx'], OPTION_STYLE_KEBAB_CASE],

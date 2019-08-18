@@ -1,18 +1,24 @@
-import { assertSuccess, assertAnnotated } from './testHelper';
+import { getFailureMessage, Rule } from '../src/componentClassSuffixRule';
+import { assertAnnotated, assertSuccess } from './testHelper';
 
-describe('component-class-suffix', () => {
+const {
+  metadata: { ruleName }
+} = Rule;
+
+describe(ruleName, () => {
   describe('invalid component class suffix', () => {
     it('should fail when component class is with the wrong suffix', () => {
-      let source = `
+      const source = `
         @Component({
           selector: 'sg-foo-bar'
         })
         class Test {}
               ~~~~
       `;
+
       assertAnnotated({
-        ruleName: 'component-class-suffix',
-        message: 'The name of the class Test should end with the suffix Component (https://angular.io/styleguide#style-02-03)',
+        message: getFailureMessage(),
+        ruleName,
         source
       });
     });
@@ -20,127 +26,139 @@ describe('component-class-suffix', () => {
 
   describe('valid component class name', () => {
     it('should succeed when the component class name ends with Component', () => {
-      let source = `
+      const source = `
         @Component({
           selector: 'sg-foo-bar',
           template: '<foo-bar [foo]="bar">{{baz + 42}}</foo-bar>'
         })
         class TestComponent {}
       `;
-      assertSuccess('component-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid directive class', () => {
     it('should succeed when is used @Directive decorator', () => {
-      let source = `
+      const source = `
         @Directive({
           selector: '[myHighlight]'
         })
         class TestDirective {}
       `;
-      assertSuccess('component-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid pipe class', () => {
     it('should succeed when is used @Pipe decorator', () => {
-      let source = `
+      const source = `
         @Pipe({
-          selector: 'sg-test-pipe'
+          name: 'sg-test-pipe'
         })
         class TestPipe {}
       `;
-      assertSuccess('component-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid service class', () => {
     it('should succeed when is used @Injectable decorator', () => {
-      let source = `
+      const source = `
         @Injectable()
         class TestService {}
       `;
-      assertSuccess('component-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid empty class', () => {
     it('should succeed when the class is empty', () => {
-      let source = `
+      const source = `
         class TestEmpty {}
       `;
-      assertSuccess('component-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('changed suffix', () => {
     it('should succeed when different suffix is set', () => {
-      let source = `
+      const source = `
         @Component({
           selector: 'sgBarFoo'
         })
         class TestPage {}
       `;
-      assertSuccess('component-class-suffix', source, ['Page']);
+
+      assertSuccess(ruleName, source, ['Page']);
     });
 
     it('should succeed when different list of suffix is set', () => {
-      let source = `
+      const source = `
         @Component({
           selector: 'sgBarFoo'
         })
         class TestPage {}
       `;
-      assertSuccess('component-class-suffix', source, ['Page', 'View']);
+
+      assertSuccess(ruleName, source, ['Page', 'View']);
     });
 
-    it('should fail when different list of suffix is set and doesnt match', () => {
-      let source = `
-        @Component({
-          selector: 'sgBarFoo'
-        })
-        class TestPage {}
-              ~~~~~~~~
-      `;
-      assertAnnotated({
-        ruleName: 'component-class-suffix',
-        message:
-          'The name of the class TestPage should end with the suffix Component,View' + ' (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Component', 'View']
-      });
-    });
-
-    it('should fail when different sufix is set and doesnt match', () => {
-      let source = `
+    it('should fail when different list of suffix is set and does not match', () => {
+      const source = `
         @Component({
           selector: 'sgBarFoo'
         })
         class TestPage {}
               ~~~~~~~~
       `;
+      const suffixes = ['Component', 'View'];
+
       assertAnnotated({
-        ruleName: 'component-class-suffix',
-        message: 'The name of the class TestPage should end with the suffix Component (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Component']
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
       });
     });
 
-    it('should fail when different sufix is set and doesnt match', () => {
-      let source = `
+    it('should fail when different suffix is set and does not match', () => {
+      const source = `
+        @Component({
+          selector: 'sgBarFoo'
+        })
+        class TestPage {}
+              ~~~~~~~~
+      `;
+      const suffixes = ['Component'];
+
+      assertAnnotated({
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
+      });
+    });
+
+    it('should fail when different suffix is set and does not match', () => {
+      const source = `
         @Component({
           selector: 'sgBarFoo'
         })
         class TestDirective {}
               ~~~~~~~~~~~~~
       `;
+      const suffixes = ['Page'];
+
       assertAnnotated({
-        ruleName: 'component-class-suffix',
-        message: 'The name of the class TestDirective should end with the suffix Page (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Page']
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
       });
     });
   });

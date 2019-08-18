@@ -6,7 +6,7 @@ import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVis
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Ensures that the Mouse Events mouseover and mouseout are accompanied with Key Events focus and blur',
+    description: 'Ensures that the Mouse Events mouseover and mouseout are accompanied with key events focus and blur.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Keyboard is important for users with physical disabilities who cannot use mouse.',

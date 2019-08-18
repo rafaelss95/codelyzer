@@ -4,7 +4,7 @@ import { MetadataPropertyBase } from './metadataPropertyBase';
 import { AngularInnerClassDecorators } from './util/utils';
 
 const METADATA_PROPERTY_NAME = 'host';
-const STYLE_GUIDE_LINK = 'https://angular.io/styleguide#style-06-03';
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-06-03';
 
 export class Rule extends MetadataPropertyBase {
   static readonly metadata: IRuleMetadata = {

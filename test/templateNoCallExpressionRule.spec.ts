@@ -11,8 +11,8 @@ describe(ruleName, () => {
     it('should fail with call expression in expression binding', () => {
       const source = `
         @Component({
-          template: '<a href="http://example.com">{{ getInfo() }}</a>'
-                                                     ~~~~~~~~~~
+          template: '<a href="https://example.com">{{ getInfo() }}</a>'
+                                                      ~~~~~~~~~~
         })
         class Bar {}
       `;

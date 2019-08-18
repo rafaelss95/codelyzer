@@ -6,7 +6,7 @@ import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVis
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Ensure that autofocus property is not used',
+    description: 'Ensure that autofocus property is not used.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'autofocus attribute reduces usability and accessibility for users.',
@@ -15,7 +15,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = 'autofocus attribute should not be used, as it reduces usability and accessibility for users.';
+  static readonly FAILURE_STRING = 'autofocus attribute should not be used, as it reduces usability and accessibility for users';
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     const walkerConfig: NgWalkerConfig = { templateVisitorCtrl: TemplateVisitorCtrl };

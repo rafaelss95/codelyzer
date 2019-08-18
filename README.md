@@ -221,9 +221,9 @@ As last step you can execute all the rules against your code with tslint:
 You should see the following output:
 
 ```text
-component.ts[4, 13]: The selector of the component "Codelyzer" should have prefix "sg" (https://goo.gl/cix8BY)
-component.ts[12, 3]: Implement lifecycle hook interface OnInit for method ngOnInit in class Codelyzer (https://goo.gl/w1Nwk3)
-component.ts[9, 7]: The name of the class Codelyzer should end with the suffix Component (https://goo.gl/5X1TE7)
+component.ts[4, 13]: The selector should be prefixed by "sg" (https://angular.io/guide/styleguide#style-02-07);
+component.ts[12, 3]: Lifecycle interface OnInit should be implemented for method ngOnInit (https://angular.io/guide/styleguide#style-09-01)
+component.ts[9, 7]: The name of a component should be suffixed by "Component" (https://angular.io/guide/styleguide#style-02-03)
 ```
 
 ### Editor Configuration
@@ -359,7 +359,7 @@ Codelyzer supports any template and style language by custom hooks. If you're us
 
 ```js
 // Demo of transforming Sass styles
-var sass = require('node-sass');
+const sass = require('node-sass');
 
 module.exports = {
   // Definition of custom interpolation strings
@@ -377,7 +377,7 @@ module.exports = {
   // NOTE that this method WILL NOT throw an error in case of invalid template.
   //
   transformTemplate(code, url, decorator) {
-    return { code: code, url: url };
+    return { code, url };
   },
 
   // Transformation of styles. This hook is useful is you're using
@@ -386,13 +386,16 @@ module.exports = {
   // NOTE that this method WILL NOT throw an error in case of invalid style.
   //
   transformStyle(code, url, decorator) {
-    var result = { code: code, url: url };
+    const result = { code, url };
+
     if (url && /\.scss$/.test(url)) {
-      var transformed = sass.renderSync({ data: code, sourceMap: true, outFile: '/dev/null' });
+      const transformed = sass.renderSync({ data: code, sourceMap: true, outFile: '/dev/null' });
+
       result.source = code;
       result.code = transformed.css.toString();
       result.map = transformed.map.toString();
     }
+
     return result;
   },
 

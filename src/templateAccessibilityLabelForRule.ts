@@ -6,6 +6,7 @@ import { SourceFile } from 'typescript/lib/typescript';
 import { ComponentMetadata } from './angular/metadata';
 import { NgWalker, NgWalkerConfig } from './angular/ngWalker';
 import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVisitor';
+import { getReadableList } from './util/getReadableList';
 import { isChildNodeOf } from './util/isChildNodeOf';
 import { objectKeys } from './util/objectKeys';
 
@@ -31,17 +32,6 @@ const DEFAULT_LABEL_COMPONENTS = ['label'];
 type OptionKeys = typeof OPTION_CONTROL_COMPONENTS | typeof OPTION_LABEL_ATTRIBUTES | typeof OPTION_LABEL_COMPONENTS;
 
 type OptionDictionary = Readonly<Record<OptionKeys, ReadonlyArray<string>>>;
-
-const getReadableItems = (items: ReadonlyArray<string>): string => {
-  const { length: itemsLength } = items;
-
-  if (itemsLength === 1) return `"${items[0]}"`;
-
-  return `${items
-    .map(x => `"${x}"`)
-    .slice(0, itemsLength - 1)
-    .join(', ')} and "${[...items].pop()}"`;
-};
 
 export class Rule extends AbstractRule {
   static readonly metadata: IRuleMetadata = {
@@ -76,11 +66,11 @@ export class Rule extends AbstractRule {
       An optional object with optional \`${OPTION_CONTROL_COMPONENTS}\`, \`${OPTION_LABEL_ATTRIBUTES}\` and \`${OPTION_LABEL_COMPONENTS}\` properties.
 
       * \`${OPTION_CONTROL_COMPONENTS}\` - components that must be inside a label component. Default and non overridable values are
-      ${getReadableItems(DEFAULT_CONTROL_COMPONENTS)}.
+      ${getReadableList(DEFAULT_CONTROL_COMPONENTS, 'and')}.
       * \`${OPTION_LABEL_ATTRIBUTES}\` - attributes that must be set on label components. Default and non overridable values are
-      ${getReadableItems(DEFAULT_LABEL_ATTRIBUTES)}.
+      ${getReadableList(DEFAULT_LABEL_ATTRIBUTES, 'and')}.
       * \`${OPTION_LABEL_COMPONENTS}\` - components that act like a label. Default and non overridable values are
-      ${getReadableItems(DEFAULT_LABEL_COMPONENTS)}.
+      ${getReadableList(DEFAULT_LABEL_COMPONENTS, 'and')}.
     `,
     ruleName: 'template-accessibility-label-for',
     type: 'functionality',

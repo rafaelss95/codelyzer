@@ -24,7 +24,7 @@ export class Rule extends AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = `@${ATTRIBUTE} is considered bad practice. Use @Input instead.`;
+  static readonly FAILURE_STRING = `@${ATTRIBUTE} is considered bad practice. Use @Input instead`;
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     return this.applyWithFunction(sourceFile, walk);

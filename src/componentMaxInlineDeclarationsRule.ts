@@ -92,7 +92,7 @@ class Walker extends NgWalker {
   constructor(sourceFile: SourceFile, options: IOptions) {
     super(sourceFile, options);
 
-    const { animations = -1, styles = -1, template = -1 } = (options.ruleArguments[0] || []) as PropertyPair;
+    const { animations = -1, styles = -1, template = -1 } = (options.ruleArguments[0] || {}) as PropertyPair;
 
     this.animationsLinesLimit = animations > -1 ? animations : this.animationsLinesLimit;
     this.stylesLinesLimit = styles > -1 ? styles : this.stylesLinesLimit;

@@ -231,4 +231,4 @@ A detailed explanation can be found in this [document][commit-message-format].
 
 [github]: https://github.com/mgechev/codelyzer
 [gitter]: https://gitter.im/mgechev/codelyzer
-[stackoverflow]: http://stackoverflow.com/questions/tagged/codelyzer
+[stackoverflow]: https://stackoverflow.com/questions/tagged/codelyzer

@@ -2,6 +2,7 @@ import { sprintf } from 'sprintf-js';
 import { IOptions, IRuleMetadata, RuleFailure, Rules, Utils } from 'tslint/lib';
 import { Decorator, PropertyDeclaration, SourceFile } from 'typescript';
 import { NgWalker } from './angular/ngWalker';
+import { getReadableList } from './util/getReadableList';
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
@@ -18,7 +19,7 @@ export class Rule extends Rules.AbstractRule {
     },
     optionsDescription: 'Options accept a string array of disallowed input prefixes.',
     rationale: Utils.dedent`
-      HTML attributes are not prefixed. It's considered best not to prefix Inputs.
+      HTML attributes are not prefixed. It's considered best not to prefix inputs.
       * Example: 'enabled' is prefered over 'isEnabled'.
     `,
     ruleName: 'no-input-prefix',
@@ -46,21 +47,8 @@ export class Rule extends Rules.AbstractRule {
   }
 }
 
-const getReadablePrefixes = (prefixes: string[]): string => {
-  const prefixesLength = prefixes.length;
-
-  if (prefixesLength === 1) {
-    return `"${prefixes[0]}"`;
-  }
-
-  return `${prefixes
-    .map(x => `"${x}"`)
-    .slice(0, prefixesLength - 1)
-    .join(', ')} or "${[...prefixes].pop()}"`;
-};
-
 export const getFailureMessage = (prefixes: string[]): string => {
-  return sprintf(Rule.FAILURE_STRING, getReadablePrefixes(prefixes));
+  return sprintf(Rule.FAILURE_STRING, getReadableList(prefixes, 'or'));
 };
 
 class Walker extends NgWalker {
@@ -71,18 +59,16 @@ class Walker extends NgWalker {
     this.blacklistedPrefixes = options.ruleArguments;
   }
 
-  protected visitNgInput(property: PropertyDeclaration, input: Decorator, args: string[]) {
+  protected visitNgInput(property: PropertyDeclaration, input: Decorator, args: string[]): void {
     this.validatePrefix(property);
     super.visitNgInput(property, input, args);
   }
 
-  private validatePrefix(property: PropertyDeclaration) {
+  private validatePrefix(property: PropertyDeclaration): void {
     const memberName = property.name.getText();
     const isBlackListedPrefix = this.blacklistedPrefixes.some(x => x === memberName || new RegExp(`^${x}[^a-z]`).test(memberName));
 
-    if (!isBlackListedPrefix) {
-      return;
-    }
+    if (!isBlackListedPrefix) return;
 
     const failure = getFailureMessage(this.blacklistedPrefixes);
 

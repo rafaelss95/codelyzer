@@ -3,10 +3,12 @@ import * as ts from 'typescript';
 import { SourceFile } from 'typescript/lib/typescript';
 import { NgWalker } from './angular/ngWalker';
 
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-05-04';
+
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
     description: "The ./ prefix is standard syntax for relative URLs; don't depend on Angular's current ability to do without that prefix.",
-    descriptionDetails: 'See more at https://angular.io/styleguide#style-05-04.',
+    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}.`,
     rationale: 'A component relative URL requires no change when you move the component files, as long as the files stay together.',
     ruleName: 'relative-url-prefix',
     options: null,
@@ -15,7 +17,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = 'The ./ prefix is standard syntax for relative URLs. (https://angular.io/styleguide#style-05-04)';
+  static readonly FAILURE_STRING = `The ./ prefix is standard syntax for relative URLs (${STYLE_GUIDE_LINK})`;
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     const walker = new Walker(sourceFile, this.getOptions());

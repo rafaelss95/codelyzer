@@ -48,8 +48,9 @@ export class Rule extends AbstractRule {
     },
     optionsDescription: dedent`
       One (or both) of the following arguments must be provided:
-      * \`${OPTION_CHECK_ID}\` Makes sure i18n attributes have ID specified
-      * \`${OPTION_CHECK_TEXT}\` Makes sure there are no elements with text content but no i18n attribute
+
+        * \`${OPTION_CHECK_ID}\` Makes sure i18n attributes have ID specified.
+        * \`${OPTION_CHECK_TEXT}\` Makes sure there are no elements with text content but no i18n attribute.
     `,
     rationale: 'Makes the code more maintainable in i18n sense.',
     ruleName: 'template-i18n',

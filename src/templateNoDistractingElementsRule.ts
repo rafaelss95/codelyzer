@@ -7,7 +7,7 @@ import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVis
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Enforces that no distracting elements are used',
+    description: 'Enforces that no distracting elements are used.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Elements that can be visually distracting can cause accessibility issues with visually impaired users.',
@@ -16,7 +16,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = 'Avoid using <%s/> elements as they create visual accessibility issues.';
+  static readonly FAILURE_STRING = 'Avoid using <%s/> elements as they create visual accessibility issues';
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     const walkerConfig: NgWalkerConfig = { templateVisitorCtrl: TemplateVisitorCtrl };

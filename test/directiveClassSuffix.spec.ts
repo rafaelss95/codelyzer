@@ -1,50 +1,57 @@
+import { getFailureMessage, Rule } from '../src/directiveClassSuffixRule';
 import { assertAnnotated, assertSuccess } from './testHelper';
 
-describe('directive-class-suffix', () => {
+const {
+  metadata: { ruleName }
+} = Rule;
+
+describe(ruleName, () => {
   describe('invalid directive class suffix', () => {
     it('should fail when directive class is with the wrong suffix', () => {
-      let source = `
+      const source = `
         @Directive({
           selector: 'sgBarFoo'
         })
         class Test {}
               ~~~~
       `;
+
       assertAnnotated({
-        ruleName: 'directive-class-suffix',
-        message: 'The name of the class Test should end with the suffix Directive (https://angular.io/styleguide#style-02-03)',
+        message: getFailureMessage(),
+        ruleName,
         source
       });
     });
 
     it('should fail when directive class is with the wrong suffix', () => {
-      let source = `
+      const source = `
         @Directive({
           selector: 'sgBarFoo'
         })
         class Test {}
               ~~~~
       `;
+      const suffixes = ['Directive', 'Page', 'Validator'];
+
       assertAnnotated({
-        ruleName: 'directive-class-suffix',
-        message:
-          'The name of the class Test should end with the suffix ' +
-          'Directive, Page, Validator (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Directive', 'Page', 'Validator']
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
       });
     });
   });
 
   describe('valid directive class name', () => {
     it('should succeed when the directive class name ends with Directive', () => {
-      let source = `
+      const source = `
         @Directive({
           selector: 'sgBarFoo'
         })
         class TestDirective {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
 
     it('should succeed when the directive class name ends with Validator and implements Validator', () => {
@@ -54,7 +61,8 @@ describe('directive-class-suffix', () => {
         })
         class TestValidator implements Validator {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
 
     it('should succeed when the directive class name ends with Validator and implements AsyncValidator', () => {
@@ -64,103 +72,103 @@ describe('directive-class-suffix', () => {
         })
         class TestValidator implements AsyncValidator {}
       `;
-      assertSuccess('directive-class-suffix', source);
-    });
-  });
 
-  describe('not called decorator', () => {
-    it('should not fail when @Directive is not called', () => {
-      let source = `
-        @Directive
-        class TestDirective {}
-      `;
-      assertSuccess('directive-class-suffix', source);
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid directive class', () => {
     it('should succeed when is used @Component decorator', () => {
-      let source = `
+      const source = `
         @Component({
-            selector: 'sg-foo-bar'
+          selector: 'sg-foo-bar'
         })
         class TestComponent {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid pipe class', () => {
     it('should succeed when is used @Pipe decorator', () => {
-      let source = `
+      const source = `
         @Pipe({
-            selector: 'sg-test-pipe'
+          name: 'sg-test-pipe'
         })
         class TestPipe {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid service class', () => {
     it('should succeed when is used @Injectable decorator', () => {
-      let source = `
+      const source = `
         @Injectable()
         class TestService {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('valid empty class', () => {
     it('should succeed when the class is empty', () => {
-      let source = `
+      const source = `
         class TestEmpty {}
       `;
-      assertSuccess('directive-class-suffix', source);
+
+      assertSuccess(ruleName, source);
     });
   });
 
   describe('changed suffix', () => {
-    it('should suceed when different sufix is set', () => {
-      let source = `
+    it('should suceed when different suffix is set', () => {
+      const source = `
         @Directive({
-            selector: 'sgBarFoo'
+          selector: 'sgBarFoo'
         })
         class TestPage {}
       `;
-      assertSuccess('directive-class-suffix', source, ['Page']);
+
+      assertSuccess(ruleName, source, ['Page']);
     });
 
-    it('should fail when different sufix is set and doesnt match', () => {
-      let source = `
+    it('should fail when different suffix is set and does not match', () => {
+      const source = `
         @Directive({
           selector: 'sgBarFoo'
         })
         class TestPage {}
               ~~~~~~~~
       `;
+      const suffixes = ['Directive'];
+
       assertAnnotated({
-        ruleName: 'directive-class-suffix',
-        message: 'The name of the class TestPage should end with the suffix Directive (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Directive']
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
       });
     });
 
-    it('should fail when different sufix is set and doesnt match', () => {
-      let source = `
+    it('should fail when different suffix is set and does not match', () => {
+      const source = `
         @Directive({
           selector: 'sgBarFoo'
         })
         class TestDirective {}
               ~~~~~~~~~~~~~
       `;
+      const suffixes = ['Page'];
+
       assertAnnotated({
-        ruleName: 'directive-class-suffix',
-        message: 'The name of the class TestDirective should end with the suffix Page (https://angular.io/styleguide#style-02-03)',
-        source,
-        options: ['Page']
+        message: getFailureMessage({ suffixes }),
+        options: suffixes,
+        ruleName,
+        source
       });
     });
   });

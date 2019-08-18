@@ -37,10 +37,10 @@ export const getErrorMessage = (element: string): string => {
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Ensures that the heading, anchor and button elements have content in it',
+    description: 'Ensures that the heading, anchor and button elements have content in it.',
     options: null,
     optionsDescription: 'Not configurable.',
-    rationale: 'Heading, anchor and button elements should have content to be accessible by screen readers',
+    rationale: 'Heading, anchor and button elements should have content to be accessible by screen readers.',
     ruleName: 'template-accessibility-elements-content',
     type: 'functionality',
     typescriptOnly: true

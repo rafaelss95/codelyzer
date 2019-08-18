@@ -17,7 +17,7 @@ interface FailureParameters {
   readonly methodName: AngularLifecycleMethodKeys;
 }
 
-const STYLE_GUIDE_LINK = 'https://angular.io/styleguide#style-09-01';
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-09-01';
 
 export const getFailureMessage = (failureParameters: FailureParameters): string =>
   sprintf(Rule.FAILURE_STRING, failureParameters.interfaceName, failureParameters.methodName);
@@ -25,7 +25,7 @@ export const getFailureMessage = (failureParameters: FailureParameters): string 
 export class Rule extends AbstractRule {
   static readonly metadata: IRuleMetadata = {
     description: 'Ensures classes implement lifecycle interfaces corresponding to the declared lifecycle methods.',
-    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}`,
+    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}.`,
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Interfaces prescribe typed method signatures. Use those signatures to flag spelling and syntax mistakes.',
@@ -34,7 +34,7 @@ export class Rule extends AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = `Lifecycle interface %s should be implemented for method %s. (${STYLE_GUIDE_LINK})`;
+  static readonly FAILURE_STRING = `Lifecycle interface %s should be implemented for method %s (${STYLE_GUIDE_LINK})`;
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     return this.applyWithFunction(sourceFile, walk);

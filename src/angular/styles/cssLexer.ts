@@ -609,7 +609,7 @@ function isValidMediaQueryRuleCharacter(code: number): boolean {
 }
 
 function isValidAtRuleCharacter(code: number): boolean {
-  // @document url(http://www.w3.org/page?something=on#hash),
+  // @document url(https://www.w3.org/page?something=on#hash),
   switch (code) {
     case chars.$LPAREN:
     case chars.$RPAREN:

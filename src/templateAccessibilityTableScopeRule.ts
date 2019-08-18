@@ -31,12 +31,12 @@ class TemplateVisitorCtrl extends BasicTemplateAstVisitor {
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Ensures that scope is not used on any element except th',
+    description: 'Ensures that scope is not used on any element except th.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: Utils.dedent`
-    The scope attribute makes table navigation much easier for screen reader users, provided that it is used correctly.
-    If used incorrectly, it can make table navigation much harder and less efficient. (aXe)
+      The scope attribute makes table navigation much easier for screen reader users, provided that it is used correctly.
+      If used incorrectly, it can make table navigation much harder and less efficient (aXe).
     `,
     ruleName: 'template-accessibility-table-scope',
     type: 'functionality',

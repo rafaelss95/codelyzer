@@ -12,7 +12,7 @@ const domElements = new Set(dom.keys());
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Ensures that the click event is accompanied with at least one key event keyup, keydown or keypress',
+    description: 'Ensures that the click event is accompanied with at least one key event keyup, keydown or keypress.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Keyboard is important for users with physical disabilities who cannot use mouse.',

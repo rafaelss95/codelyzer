@@ -3,10 +3,12 @@ import { Decorator, PropertyDeclaration, SourceFile } from 'typescript/lib/types
 import { DirectiveMetadata } from './angular/metadata';
 import { NgWalker } from './angular/ngWalker';
 
+const STYLE_GUIDE_LINK = 'https://angular.io/guide/styleguide#style-05-13';
+
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
     description: 'Disallows renaming directive outputs by providing a string to the decorator.',
-    descriptionDetails: 'See more at https://angular.io/styleguide#style-05-13.',
+    descriptionDetails: `See more at ${STYLE_GUIDE_LINK}.`,
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Two names for the same property (one private, one public) is inherently confusing.',
@@ -15,7 +17,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = '@Outputs should not be renamed';
+  static readonly FAILURE_STRING = `@Outputs should not be renamed (${STYLE_GUIDE_LINK})`;
 
   apply(sourceFile: SourceFile): RuleFailure[] {
     const walker = new Walker(sourceFile, this.getOptions());

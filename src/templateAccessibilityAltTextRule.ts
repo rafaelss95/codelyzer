@@ -7,7 +7,7 @@ import { BasicTemplateAstVisitor } from './angular/templates/basicTemplateAstVis
 
 export class Rule extends Rules.AbstractRule {
   static readonly metadata: IRuleMetadata = {
-    description: 'Enforces alternate text for elements which require the alt, aria-label, aria-labelledby attributes',
+    description: 'Enforces alternate text for elements which require the alt, aria-label, aria-labelledby attributes.',
     options: null,
     optionsDescription: 'Not configurable.',
     rationale: 'Alternate text lets screen readers provide more information to end users.',
@@ -16,7 +16,7 @@ export class Rule extends Rules.AbstractRule {
     typescriptOnly: true
   };
 
-  static readonly FAILURE_STRING = '%s element must have a text alternative.';
+  static readonly FAILURE_STRING = '%s element must have a text alternative';
   static readonly DEFAULT_ELEMENTS = ['img', 'object', 'area', 'input[type="image"]'];
 
   apply(sourceFile: SourceFile): RuleFailure[] {

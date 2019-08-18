@@ -164,7 +164,7 @@ class SemicolonTemplateVisitor extends BasicTemplateAstVisitor implements Config
 }
 
 class TemplateVisitorCtrl extends BasicTemplateAstVisitor {
-  private visitors: (BasicTemplateAstVisitor & ConfigurableVisitor)[] = [
+  private readonly visitors: (BasicTemplateAstVisitor & ConfigurableVisitor)[] = [
     new InterpolationWhitespaceVisitor(this.getSourceFile(), this.getOptions(), this.context, this.templateStart),
     new SemicolonTemplateVisitor(this.getSourceFile(), this.getOptions(), this.context, this.templateStart)
   ];
@@ -261,7 +261,7 @@ class PipeWhitespaceVisitor extends RecursiveAngularExpressionVisitor implements
 }
 
 class ExpressionVisitorCtrl extends RecursiveAngularExpressionVisitor {
-  private visitors: (RecursiveAngularExpressionVisitor & ConfigurableVisitor)[] = [
+  private readonly visitors: (RecursiveAngularExpressionVisitor & ConfigurableVisitor)[] = [
     new PipeWhitespaceVisitor(this.getSourceFile(), this.getOptions(), this.context, this.basePosition)
   ];
 
@@ -300,9 +300,10 @@ export class Rule extends Lint.Rules.AbstractRule {
     },
     optionsDescription: Lint.Utils.dedent`
       One (or both) of the following arguments must be provided:
-      * \`${OPTION_CHECK_INTERPOLATION}\` - checks for whitespace before and after the interpolation characters.
-      * \`${OPTION_CHECK_PIPE}\` - checks for whitespace before and after a pipe.
-      * \`${OPTION_CHECK_SEMICOLON}\` - checks for whitespace after semicolon.
+
+        * \`${OPTION_CHECK_INTERPOLATION}\` - checks for whitespace before and after the interpolation characters.
+        * \`${OPTION_CHECK_PIPE}\` - checks for whitespace before and after a pipe.
+        * \`${OPTION_CHECK_SEMICOLON}\` - checks for whitespace after semicolon.
     `,
     rationale: 'Having whitespace in the right places in an Angular expression makes the template more readable.',
     ruleName: 'angular-whitespace',
