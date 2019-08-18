@@ -17,6 +17,7 @@ export { Rule as NoInputsMetadataPropertyRule } from './noInputsMetadataProperty
 export { Rule as NoLifecycleCallRule } from './noLifecycleCallRule';
 export { Rule as NoOutputNativeRule } from './noOutputNativeRule';
 export { Rule as NoOutputOnPrefixRule } from './noOutputOnPrefixRule';
+export { Rule as NoOutputPrefixRule } from './noOutputPrefixRule';
 export { Rule as NoOutputRenameRule } from './noOutputRenameRule';
 export { Rule as NoOutputsMetadataPropertyRule } from './noOutputsMetadataPropertyRule';
 export { Rule as NoPipeImpureRule } from './noPipeImpureRule';
