@@ -44,6 +44,7 @@ export { Rule as TemplateNoAutofocusRule } from './templateNoAutofocusRule';
 export { Rule as TemplateNoCallExpressionRule } from './templateNoCallExpressionRule';
 export { Rule as TemplateNoDistractingElementsRule } from './templateNoDistractingElementsRule';
 export { Rule as TemplateNoNegatedAsyncRule } from './templateNoNegatedAsyncRule';
+export { Rule as TemplatePreferPropertyBindingRule } from './templatePreferPropertyBindingRule';
 export { Rule as TemplateUseTrackByFunctionRule } from './templateUseTrackByFunctionRule';
 export { Rule as UseComponentSelectorRule } from './useComponentSelectorRule';
 export { Rule as UseComponentViewEncapsulationRule } from './useComponentViewEncapsulationRule';
